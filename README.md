@@ -10,6 +10,7 @@ A comprehensive CodeIgniter4 API that serves Serbian words, names, and surnames 
 - **Names API**: Serbian names with gender information and vocative forms
 - **Surnames API**: Serbian surnames database
 - **Transliteration**: Convert between Latin and Cyrillic scripts
+- **Text Converter**: Interactive web interface for live Latin ↔ Cyrillic conversion
 - **Advanced Filtering**: Search by text, length, gender, and more
 - **Pagination**: Efficient pagination for all endpoints
 - **Random Entries**: Get random words, names, or surnames
@@ -287,6 +288,40 @@ $response.Content
 $response = Invoke-WebRequest -Uri "http://localhost:8080/api-old/words?limit=3" -UseBasicParsing  
 $response.Content
 ```
+
+## Text Converter
+
+In addition to the API endpoints, the application includes an interactive web interface for live Serbian text conversion between Latin and Cyrillic scripts.
+
+### Features
+- **Live Translation**: Real-time conversion as you type
+- **Bidirectional**: Convert Latin ↔ Cyrillic automatically or manually
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **User-Friendly**: Copy to clipboard, text swap, examples, and keyboard shortcuts
+
+### Access
+- **Web Interface**: Visit `/converter` on your API domain
+- **API Endpoint**: `POST /converter/translate` for programmatic access
+
+### Example Usage
+```javascript
+// Web interface at: http://localhost:8080/converter
+
+// API usage
+const response = await fetch('/converter/translate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        text: 'Zdravo, kako ste?',
+        direction: 'auto'  // or 'latin-to-cyrillic' or 'cyrillic-to-latin'
+    })
+});
+
+const result = await response.json();
+// Result: { success: true, data: { transliterated: "Здраво, како сте?", ... } }
+```
+
+For detailed converter documentation, see [CONVERTER_README.md](CONVERTER_README.md).
 
 ## Performance Comparison
 
