@@ -7,6 +7,10 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+// Converter routes
+$routes->get('converter', 'Converter::index');
+$routes->post('converter/translate', 'Converter::translate');
+
 // API Routes - Database-backed (new)
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
     

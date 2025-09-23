@@ -374,6 +374,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#examples">Examples</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('converter') ?>">
+                            <i class="fas fa-exchange-alt me-1"></i>Text Converter
+                        </a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <a href="<?= esc($github_url) ?>" target="_blank" class="github-link">
@@ -399,6 +404,10 @@
                         <a href="#documentation" class="btn btn-primary-custom">
                             <i class="fas fa-book"></i>
                             <span>View Documentation</span>
+                        </a>
+                        <a href="<?= base_url('converter') ?>" class="btn btn-outline-custom">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Text Converter</span>
                         </a>
                         <a href="<?= esc($github_url) ?>" target="_blank" class="btn btn-outline-custom">
                             <i class="fab fa-github"></i>
