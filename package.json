@@ -1,0 +1,33 @@
+{
+  "name": "serbian-dictionary-api",
+  "version": "1.0.0",
+  "description": "A CodeIgniter4 API that serves Serbian words, names, and surnames from JSON datasets with transliteration support",
+  "main": "public/index.php",
+  "scripts": {
+    "serve": "php spark serve",
+    "test": "vendor/bin/phpunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivkeapp/serbian-dictionary-api.git"
+  },
+  "keywords": [
+    "serbian",
+    "dictionary",
+    "api",
+    "transliteration",
+    "codeigniter4",
+    "php",
+    "cyrillic",
+    "latin",
+    "names",
+    "surnames"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "php": ">=8.1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
