@@ -176,7 +176,7 @@ class SerbianDataService
     /**
      * Get surnames with filters
      */
-    public static function getSurnames(array $filters = []): array
+    public static function getSurnamesOld(array $filters = []): array
     {
         $data = self::loadJsonData('surnames.json');
         $surnames = [];
@@ -214,11 +214,67 @@ class SerbianDataService
             'total' => $totalCount
         ];
     }
+
+    /**
+     * Get surnames with filters (DB version)
+     */
+    public static function getSurnames(array $filters = []): array
+    {
+        $model = new \App\Models\SurnameModel();
+
+        // Base query
+        $builder = $model->builder();
+
+        // Apply "starts_with" filter (case-insensitive, Latin/Cyrillic normalization)
+        if (!empty($filters['starts_with'])) {
+            $startsWith = $filters['starts_with'];
+
+            // Normalize Cyrillic to Latin for comparison consistency
+            $startsWith = self::normalizeToLatin($startsWith);
+
+            // We'll search by normalized Latin version in 'surname' column
+            // (Assumes surnames are stored in Latin)
+            $builder->like('surname', $startsWith, 'after');
+        }
+
+        // Randomize results if requested
+        if (!empty($filters['random'])) {
+            $builder->orderBy('RAND()');
+        } else {
+            $builder->orderBy('surname', 'ASC');
+        }
+
+        // Pagination setup
+        $page  = $filters['page'] ?? 1;
+        $limit = $filters['limit'] ?? 50;
+        $offset = ($page - 1) * $limit;
+
+        // Clone query to count total before applying pagination
+        $total = $builder->countAllResults(false);
+
+        // Apply limit & offset
+        $builder->limit($limit, $offset);
+        $query = $builder->get();
+
+        $surnames = $query->getResultArray();
+
+        // Transform to API response format
+        $result = [];
+        foreach ($surnames as $surname) {
+            $result[] = self::formatSurnameResponse($surname);
+        }
+
+        return [
+            'surnames' => $result,
+            'total'    => $total
+        ];
+    }
+
     
     /**
      * Get single surname details
      */
-    public static function getSurname(string $surname): ?array
+    public static function getSurnameOld(string $surname): ?array
     {
         $data = self::loadJsonData('surnames.json');
         
@@ -230,6 +286,23 @@ class SerbianDataService
         
         return null;
     }
+
+    /**
+     * Get single surname details (DB version)
+     */
+    public static function getSurname(string $surname): ?array
+    {
+        $model = new \App\Models\SurnameModel();
+
+        $result = $model->where('surname', $surname)->first();
+
+        if ($result) {
+            return self::formatSurnameResponse($result);
+        }
+
+        return null;
+    }
+
     
     /**
      * Filter words based on criteria
@@ -370,11 +443,19 @@ class SerbianDataService
     
     /**
      * Format surname response
+     * Edit: handle both string and array/object inputs
+     * Note: Intelephense may show a warning here due to mixed types on older PHP versions < 8.0
      */
-    private static function formatSurnameResponse(string $surname): array
+    private static function formatSurnameResponse(string|array|object $surname): array
     {
+        if (is_array($surname)) {
+            $surname = $surname['surname'] ?? '';
+        } elseif (is_object($surname)) {
+            $surname = $surname->surname ?? '';
+        }
+
         $scripts = Transliteration::getBothScripts($surname);
-        
+
         return [
             'surname' => $surname,
             'latin' => $scripts['latin'],
@@ -406,4 +487,23 @@ class SerbianDataService
                 return null;
         }
     }
+
+
+    /**
+     * Normalize Cyrillic lookalike letters to Latin
+     */
+    private static function normalizeToLatin(string $str): string
+    {
+        $map = [
+            // Uppercase
+            'А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M',
+            'Н' => 'H', 'О' => 'O', 'Р' => 'P', 'С' => 'C', 'Т' => 'T', 'Х' => 'X',
+            // Lowercase
+            'а' => 'a', 'в' => 'b', 'е' => 'e', 'к' => 'k', 'м' => 'm',
+            'н' => 'h', 'о' => 'o', 'р' => 'p', 'с' => 'c', 'т' => 't', 'х' => 'x'
+        ];
+
+        return strtr($str, $map);
+    }
+
 }
