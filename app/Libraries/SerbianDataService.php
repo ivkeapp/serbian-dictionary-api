@@ -121,11 +121,71 @@ class SerbianDataService
         
         return null;
     }
+
+    public static function getNames(array $filters = []): array
+    {
+        $model = new \App\Models\NameModel();
+        $builder = $model->builder();
+
+        // Apply filters
+        if (!empty($filters['starts_with'])) {
+            $builder->like('name', $filters['starts_with'], 'after');
+        }
+
+        if (!empty($filters['gender'])) {
+            $builder->where('gender', $filters['gender']);
+        }
+
+        $totalCount = $builder->countAllResults(false); // don't reset query builder
+
+        // Random order
+        if (!empty($filters['random']) && $filters['random'] === true) {
+            $builder->orderBy('RAND()');
+        } else {
+            $builder->orderBy('name', 'ASC');
+        }
+
+        // Pagination
+        $page = (int)($filters['page'] ?? 1);
+        $limit = (int)($filters['limit'] ?? 50);
+        $offset = ($page - 1) * $limit;
+
+        $builder->limit($limit, $offset);
+
+        $names = $builder->get()->getResultArray();
+
+        // Transform to API format
+        $result = [];
+        foreach ($names as $nameData) {
+            $result[] = self::formatNameResponse($nameData);
+        }
+
+        return [
+            'names' => $result,
+            'total' => $totalCount
+        ];
+    }
+
+    /**
+     * Get single name details (DB-backed)
+     */
+    public static function getName(string $name): ?array
+    {
+        $model = new \App\Models\NameModel();
+
+        $result = $model->where('LOWER(name)', strtolower($name))->first();
+
+        if ($result) {
+            return self::formatNameResponse($result);
+        }
+
+        return null;
+    }
     
     /**
      * Get names with filters
      */
-    public static function getNames(array $filters = []): array
+    public static function getNamesOld(array $filters = []): array
     {
         $data = self::loadJsonData('vocative.json');
         $names = $data;
@@ -160,7 +220,7 @@ class SerbianDataService
     /**
      * Get single name details
      */
-    public static function getName(string $name): ?array
+    public static function getNameOld(string $name): ?array
     {
         $data = self::loadJsonData('vocative.json');
         
@@ -422,24 +482,27 @@ class SerbianDataService
      */
     private static function formatNameResponse(array $nameData): array
     {
-        $scripts = Transliteration::getBothScripts($nameData['name']);
-        $vocativeScripts = Transliteration::getBothScripts($nameData['vocative']);
-        
+        $name = $nameData['name'] ?? '';
+        $vocative = $nameData['vocative'] ?? null;
+
+        $scripts = Transliteration::getBothScripts($name);
         $response = [
-            'name' => $nameData['name'],
-            'gender' => $nameData['sex'],
-            'latin' => $scripts['latin'],
-            'cyrillic' => $scripts['cyrillic']
+            'name'      => $name,
+            'gender'    => $nameData['gender'] ?? null,
+            'latin'     => $scripts['latin'],
+            'cyrillic'  => $scripts['cyrillic'],
         ];
-        
-        if (!empty($nameData['vocative'])) {
-            $response['vocative'] = $nameData['vocative'];
-            $response['vocative_latin'] = $vocativeScripts['latin'];
-            $response['vocative_cyrillic'] = $vocativeScripts['cyrillic'];
+
+        if (!empty($vocative)) {
+            $vocativeScripts = Transliteration::getBothScripts($vocative);
+            $response['vocative']           = $vocative;
+            $response['vocative_latin']     = $vocativeScripts['latin'];
+            $response['vocative_cyrillic']  = $vocativeScripts['cyrillic'];
         }
-        
+
         return $response;
     }
+
     
     /**
      * Format surname response
