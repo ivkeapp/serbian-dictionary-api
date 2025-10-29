@@ -5,8 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+$routes->setTranslateURIDashes(false);
 $routes->get('/', 'Home::index');
-
 // Converter routes
 $routes->get('converter', 'Converter::index');
 $routes->post('converter/translate', 'Converter::translate');

@@ -63,6 +63,9 @@ class Words extends BaseApiController
         if (empty($word)) {
             return $this->errorResponse('Word parameter is required.');
         }
+
+        // Decode URL (in case it’s percent-encoded, e.g. %C4%8D)
+        $word = urldecode($word);
         
         try {
             $wordData = SerbianDataService::getWord($word);
