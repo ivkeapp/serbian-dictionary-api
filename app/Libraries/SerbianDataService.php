@@ -129,14 +129,17 @@ class SerbianDataService
 
         // Apply filters
         if (!empty($filters['starts_with'])) {
+            // log_message('debug', 'starts_with: ' . $filters['starts_with']);
             $builder->like('name', $filters['starts_with'], 'after');
         }
 
-        if (!empty($filters['gender'])) {
+        if (!empty($filters['gender']) && $filters['gender'] !== 'all') {
+            // log_message('debug', 'gender: ' . $filters['gender']);
             $builder->where('gender', $filters['gender']);
         }
 
         $totalCount = $builder->countAllResults(false); // don't reset query builder
+        // log_message('debug', 'totalCount: ' . $totalCount);
 
         // Random order
         if (!empty($filters['random']) && $filters['random'] === true) {
@@ -149,15 +152,16 @@ class SerbianDataService
         $page = (int)($filters['page'] ?? 1);
         $limit = (int)($filters['limit'] ?? 50);
         $offset = ($page - 1) * $limit;
+        $withVocative = !empty($filters['with_vocative']) && $filters['with_vocative'] === true ? true : false;
 
         $builder->limit($limit, $offset);
 
         $names = $builder->get()->getResultArray();
-
+        // log_message('debug', 'Raw name: ' . print_r($names, true));
         // Transform to API format
         $result = [];
         foreach ($names as $nameData) {
-            $result[] = self::formatNameResponse($nameData);
+            $result[] = self::formatNameResponse($nameData, $withVocative);
         }
 
         return [
@@ -480,7 +484,7 @@ class SerbianDataService
     /**
      * Format name response
      */
-    private static function formatNameResponse(array $nameData): array
+    private static function formatNameResponse(array $nameData, bool $withVocative = true): array
     {
         $name = $nameData['name'] ?? '';
         $vocative = $nameData['vocative'] ?? null;
@@ -493,7 +497,7 @@ class SerbianDataService
             'cyrillic'  => $scripts['cyrillic'],
         ];
 
-        if (!empty($vocative)) {
+        if (!empty($vocative) && $withVocative) {
             $vocativeScripts = Transliteration::getBothScripts($vocative);
             $response['vocative']           = $vocative;
             $response['vocative_latin']     = $vocativeScripts['latin'];
