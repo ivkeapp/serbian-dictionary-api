@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    environment {
+        DEPLOY_BASE = '/home/ivke/www'
+        APACHE_CONTAINER = 'apache-container'  // change if needed
+        CI4_STAGE = "${DEPLOY_BASE}/ci4_stage"
+        CI4_TEST = "${DEPLOY_BASE}/ci4_test"
+        CI4_LIVE = "${DEPLOY_BASE}/serbian-dictionary-api"
+    }
+
+    stages {
+        stage('Checkout Source') {
+            steps {
+                git branch: 'main', credentialsId: 'github-ivke', url: 'https://github.com/ivkeapp/serbian-dictionary-api.git'
+            }
+        }
+
+        stage('Deploy to Stage') {
+            steps {
+                sh '''
+                echo "=== Deploying to STAGE ==="
+                rsync -av --delete ./ ${CI4_STAGE}/
+                docker exec ${APACHE_CONTAINER} bash -c "cd /var/www/html && composer install --no-interaction --prefer-dist"
+                '''
+            }
+        }
+
+        stage('Deploy to Test') {
+            steps {
+                input message: "Approve deployment to TEST?"
+                sh '''
+                echo "=== Deploying to TEST ==="
+                rsync -av --delete ./ ${CI4_TEST}/
+                docker exec ${APACHE_CONTAINER} bash -c "cd /var/www/html && composer install --no-interaction --prefer-dist"
+                '''
+            }
+        }
+
+        stage('Deploy to Live Production') {
+            steps {
+                input message: "Approve deployment to LIVE PRODUCTION?"
+                sh '''
+                echo "=== Deploying to LIVE ==="
+                rsync -av --delete ./ ${CI4_LIVE}/
+                docker exec ${APACHE_CONTAINER} bash -c "cd /var/www/html && composer install --no-interaction --prefer-dist"
+                docker restart ${APACHE_CONTAINER}
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Deployment pipeline finished successfully.'
+        }
+        failure {
+            echo '❌ Deployment pipeline failed.'
+        }
+    }
+}
