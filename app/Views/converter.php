@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= service('request')->getLocale() ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -385,7 +385,7 @@
         <div class="container">
             <a class="navbar-brand" href="<?= base_url() ?>">
                 <i class="fas fa-book-open me-2"></i>
-                Serbian Dictionary API
+                <?= lang('App.site.title') ?>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -394,15 +394,18 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url() ?>">
-                            <i class="fas fa-home me-1"></i>Home
+                            <i class="fas fa-home me-1"></i><?= lang('App.nav.home') ?>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="<?= base_url('converter') ?>">
-                            <i class="fas fa-exchange-alt me-1"></i>Converter
+                            <i class="fas fa-exchange-alt me-1"></i><?= lang('App.nav.converter') ?>
                         </a>
                     </li>
                 </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <?= view('components/language_switcher') ?>
+                </div>
             </div>
         </div>
     </nav>
@@ -426,13 +429,13 @@
                         <!-- Direction Selector -->
                         <div class="direction-selector text-center">
                             <button class="direction-btn active" data-direction="auto">
-                                <i class="fas fa-magic me-2"></i>Auto Detect
+                                <i class="fas fa-magic"></i> <?= lang('App.converter.direction.auto') ?>
                             </button>
                             <button class="direction-btn" data-direction="latin-to-cyrillic">
-                                <i class="fas fa-arrow-right me-2"></i>Latin → Cyrillic
+                                <i class="fas fa-arrow-right"></i> <?= lang('App.converter.direction.latinToCyrillic') ?>
                             </button>
                             <button class="direction-btn" data-direction="cyrillic-to-latin">
-                                <i class="fas fa-arrow-left me-2"></i>Cyrillic → Latin
+                                <i class="fas fa-arrow-left"></i> <?= lang('App.converter.direction.cyrillicToLatin') ?>
                             </button>
                         </div>
 
@@ -442,13 +445,13 @@
                             <div class="text-area-container">
                                 <div class="text-area-label">
                                     <i class="fas fa-edit"></i>
-                                    <span>Input Text</span>
+                                    <span><?= lang('App.converter.input.label') ?></span>
                                     <span id="inputScript" class="script-indicator script-latin">Latin</span>
                                 </div>
                                 <textarea 
                                     id="inputText" 
                                     class="text-area" 
-                                    placeholder="Type your Serbian text here...&#10;&#10;Examples:&#10;• Zdravo, kako ste?&#10;• Добро јутро!&#10;• Miloš Petrović"
+                                    placeholder="<?= lang('App.converter.input.placeholder') ?>"
                                     autocomplete="off"
                                     spellcheck="false"
                                 ></textarea>
@@ -456,7 +459,7 @@
                             </div>
 
                             <!-- Swap Button -->
-                            <button id="swapButton" class="swap-button" title="Swap input and output">
+                            <button id="swapButton" class="swap-button" title="<?= lang('App.converter.button.swap') ?>">
                                 <i class="fas fa-exchange-alt"></i>
                             </button>
 
@@ -464,16 +467,16 @@
                             <div class="text-area-container">
                                 <div class="text-area-label">
                                     <i class="fas fa-eye"></i>
-                                    <span>Output Text</span>
+                                    <span><?= lang('App.converter.output.label') ?></span>
                                     <span id="outputScript" class="script-indicator script-cyrillic">Cyrillic</span>
                                     <div class="loading-spinner" id="loadingSpinner"></div>
                                 </div>
                                 <textarea 
                                     id="outputText" 
                                     class="text-area output" 
-                                    placeholder="Transliterated text will appear here..."
+                                    placeholder="<?= lang('App.converter.output.placeholder') ?>"
                                     readonly
-                                    title="Click to copy text"
+                                    title="<?= lang('App.converter.button.copy') ?>"
                                 ></textarea>
                                 <div id="outputCount" class="character-count">0 characters</div>
                             </div>
@@ -483,11 +486,11 @@
                         <div class="action-buttons">
                             <button id="copyButton" class="btn-custom btn-success-custom">
                                 <i class="fas fa-copy"></i>
-                                <span>Copy to Clipboard</span>
+                                <span><?= lang('App.converter.button.copy') ?></span>
                             </button>
                             <button id="clearButton" class="btn-custom btn-outline-custom">
                                 <i class="fas fa-trash"></i>
-                                <span>Clear All</span>
+                                <span><?= lang('App.converter.button.clear') ?></span>
                             </button>
                             <a href="<?= base_url() ?>" class="btn-custom btn-primary-custom">
                                 <i class="fas fa-home"></i>

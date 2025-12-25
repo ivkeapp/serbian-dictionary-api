@@ -54,5 +54,10 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
+        
+        // Set language from session or default to 'sr-Lat'
+        $session = session();
+        $locale = $session->get('locale') ?? 'sr-Lat';
+        $this->request->setLocale($locale);
     }
 }
