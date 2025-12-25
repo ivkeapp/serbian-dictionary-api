@@ -7,7 +7,7 @@ class Home extends BaseController
     public function index(): string
     {
         $data = [
-            'title' => 'Serbian Dictionary API',
+            'title' => lang('App.site.title'),
             'version' => '1.0.0',
             'github_url' => 'https://github.com/ivkeapp/serbian-dictionary-api',
             'base_url' => base_url(),
@@ -15,114 +15,129 @@ class Home extends BaseController
                 [
                     'method' => 'GET',
                     'endpoint' => '/api/words',
-                    'description' => 'Get paginated list of Serbian words with filtering options',
+                    'description' => lang('App.api.words.description'),
                     'params' => [
-                        'dataset' => 'Choose between small (41K words) or large (2.8M words) dataset',
-                        'script' => 'Return words in Latin or Cyrillic script',
-                        'starts_with' => 'Filter words that start with specific letters',
-                        'contains' => 'Filter words that contain specific text',
-                        'length' => 'Filter words by exact character length',
-                        'min_length' => 'Filter words with minimum character length',
-                        'max_length' => 'Filter words with maximum character length',
-                        'random' => 'Randomize the order of results',
-                        'page' => 'Page number for pagination (default: 1)',
-                        'limit' => 'Number of results per page (default: 50, max: 100)'
+                        'dataset' => lang('App.api.words.param.dataset'),
+                        'script' => lang('App.api.words.param.script'),
+                        'starts_with' => lang('App.api.words.param.starts_with'),
+                        'contains' => lang('App.api.words.param.contains'),
+                        'length' => lang('App.api.words.param.length'),
+                        'min_length' => lang('App.api.words.param.min_length'),
+                        'max_length' => lang('App.api.words.param.max_length'),
+                        'random' => lang('App.api.words.param.random'),
+                        'page' => lang('App.api.words.param.page'),
+                        'limit' => lang('App.api.words.param.limit')
                     ],
                     'examples' => [
-                        '/api/words?dataset=small&limit=10' => 'Get first 10 words from small dataset',
-                        '/api/words?starts_with=pre&script=cyrillic' => 'Words starting with "pre" in Cyrillic',
-                        '/api/words?length=5&random=true&limit=20' => '20 random 5-letter words',
-                        '/api/words?contains=ov&min_length=6' => 'Words containing "ov" with 6+ characters',
-                        '/api/words?dataset=large&max_length=4' => 'Short words (≤4 chars) from large dataset'
+                        '/api/words?dataset=small&limit=10' => lang('App.api.words.example.1'),
+                        '/api/words?starts_with=pre&script=cyrillic' => lang('App.api.words.example.2'),
+                        '/api/words?length=5&random=true&limit=20' => lang('App.api.words.example.3'),
+                        '/api/words?contains=ov&min_length=6' => lang('App.api.words.example.4'),
+                        '/api/words?dataset=large&max_length=4' => lang('App.api.words.example.5')
                     ]
                 ],
                 [
                     'method' => 'GET',
                     'endpoint' => '/api/names',
-                    'description' => 'Get Serbian names with gender information and vocative forms',
+                    'description' => lang('App.api.names.description'),
                     'params' => [
-                        'gender' => 'Filter by male, female, or all genders',
-                        'starts_with' => 'Filter names starting with specific letters',
-                        'with_vocative' => 'Include vocative forms in response',
-                        'random' => 'Randomize the order of results',
-                        'page' => 'Page number for pagination',
-                        'limit' => 'Number of results per page'
+                        'gender' => lang('App.api.names.param.gender'),
+                        'starts_with' => lang('App.api.names.param.starts_with'),
+                        'with_vocative' => lang('App.api.names.param.with_vocative'),
+                        'random' => lang('App.api.names.param.random'),
+                        'page' => lang('App.api.names.param.page'),
+                        'limit' => lang('App.api.names.param.limit')
                     ],
                     'examples' => [
-                        '/api/names?gender=male&limit=15' => 'Get 15 male names',
-                        '/api/names?starts_with=M&with_vocative=true' => 'Names starting with "M" with vocative forms',
-                        '/api/names?gender=female&random=true&limit=5' => '5 random female names',
-                        '/api/names?with_vocative=true&page=2' => 'Second page of names with vocatives'
+                        '/api/names?gender=male&limit=15' => lang('App.api.names.example.1'),
+                        '/api/names?starts_with=M&with_vocative=true' => lang('App.api.names.example.2'),
+                        '/api/names?gender=female&random=true&limit=5' => lang('App.api.names.example.3'),
+                        '/api/names?with_vocative=true&page=2' => lang('App.api.names.example.4')
                     ]
                 ],
                 [
                     'method' => 'GET',
                     'endpoint' => '/api/surnames',
-                    'description' => 'Get Serbian surnames with Latin/Cyrillic variants',
+                    'description' => lang('App.api.surnames.description'),
                     'params' => [
-                        'starts_with' => 'Filter surnames starting with specific letters',
-                        'random' => 'Randomize the order of results',
-                        'page' => 'Page number for pagination',
-                        'limit' => 'Number of results per page'
+                        'starts_with' => lang('App.api.surnames.param.starts_with'),
+                        'random' => lang('App.api.surnames.param.random'),
+                        'page' => lang('App.api.surnames.param.page'),
+                        'limit' => lang('App.api.surnames.param.limit')
                     ],
                     'examples' => [
-                        '/api/surnames?starts_with=Pet&limit=10' => 'Surnames starting with "Pet"',
-                        '/api/surnames?random=true&limit=20' => '20 random surnames',
-                        '/api/surnames?starts_with=Ž' => 'All surnames starting with "Ž"'
+                        '/api/surnames?starts_with=Pet&limit=10' => lang('App.api.surnames.example.1'),
+                        '/api/surnames?random=true&limit=20' => lang('App.api.surnames.example.2'),
+                        '/api/surnames?starts_with=Ž' => lang('App.api.surnames.example.3')
                     ]
                 ],
                 [
                     'method' => 'GET',
                     'endpoint' => '/api/transliterate',
-                    'description' => 'Convert text between Latin and Cyrillic scripts',
+                    'description' => lang('App.api.transliterate.description'),
                     'params' => [
-                        'text' => 'Text to be transliterated (required)',
-                        'to' => 'Target script: latin or cyrillic (auto-detected if omitted)'
+                        'text' => lang('App.api.transliterate.param.text'),
+                        'to' => lang('App.api.transliterate.param.to')
                     ],
                     'examples' => [
-                        '/api/transliterate?text=Zdravo' => 'Auto-detect and convert "Zdravo"',
-                        '/api/transliterate?text=Добро jutro&to=latin' => 'Convert mixed text to Latin',
-                        '/api/transliterate?text=Miloš Petrović&to=cyrillic' => 'Convert name to Cyrillic'
+                        '/api/transliterate?text=Zdravo' => lang('App.api.transliterate.example.1'),
+                        '/api/transliterate?text=Добро jutro&to=latin' => lang('App.api.transliterate.example.2'),
+                        '/api/transliterate?text=Miloš Petrović&to=cyrillic' => lang('App.api.transliterate.example.3')
                     ]
                 ],
                 [
                     'method' => 'GET',
                     'endpoint' => '/api/random',
-                    'description' => 'Get random entry from any dataset type',
+                    'description' => lang('App.api.random.description'),
                     'params' => [
-                        'type' => 'Entry type: word, name, or surname (required)'
+                        'type' => lang('App.api.random.param.type')
                     ],
                     'examples' => [
-                        '/api/random?type=word' => 'Get a random Serbian word',
-                        '/api/random?type=name' => 'Get a random Serbian name with vocative',
-                        '/api/random?type=surname' => 'Get a random Serbian surname'
+                        '/api/random?type=word' => lang('App.api.random.example.1'),
+                        '/api/random?type=name' => lang('App.api.random.example.2'),
+                        '/api/random?type=surname' => lang('App.api.random.example.3')
                     ]
                 ]
             ],
             'use_cases' => [
                 [
-                    'title' => 'Random Word Generator',
-                    'description' => 'Generate random Serbian words for language learning apps',
+                    'title' => lang('App.useCase.language.title'),
+                    'description' => lang('App.useCase.language.description'),
                     'endpoint' => '/api/random?type=word'
                 ],
                 [
-                    'title' => 'Name Validation',
-                    'description' => 'Validate Serbian names and get their vocative forms',
+                    'title' => lang('App.useCase.content.title'),
+                    'description' => lang('App.useCase.content.description'),
                     'endpoint' => '/api/names/Miloš'
                 ],
                 [
-                    'title' => 'Text Search',
-                    'description' => 'Search words by prefix for autocomplete features',
+                    'title' => lang('App.useCase.localization.title'),
+                    'description' => lang('App.useCase.localization.description'),
                     'endpoint' => '/api/words?starts_with=pre&limit=10'
                 ],
                 [
-                    'title' => 'Script Conversion',
-                    'description' => 'Convert text between Latin and Cyrillic scripts',
+                    'title' => lang('App.useCase.research.title'),
+                    'description' => lang('App.useCase.research.description'),
                     'endpoint' => '/api/transliterate?text=Zdravo&to=cyrillic'
                 ]
             ]
         ];
 
         return view('homepage', $data);
+    }
+    
+    /**
+     * Change language
+     */
+    public function setLanguage($locale = 'en')
+    {
+        $session = session();
+        $supportedLocales = ['en', 'sr-Lat', 'sr-Cyrl'];
+        
+        if (in_array($locale, $supportedLocales)) {
+            $session->set('locale', $locale);
+        }
+        
+        return redirect()->back();
     }
 }

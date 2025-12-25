@@ -17,8 +17,8 @@ class Converter extends BaseController
     public function index(): string
     {
         $data = [
-            'title' => 'Serbian Text Converter',
-            'description' => 'Convert Serbian text between Latin and Cyrillic scripts'
+            'title' => lang('App.converter.title'),
+            'description' => lang('App.converter.description')
         ];
 
         return view('converter', $data);

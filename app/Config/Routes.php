@@ -7,6 +7,10 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->setTranslateURIDashes(false);
 $routes->get('/', 'Home::index');
+
+// Language routes
+$routes->get('set-language/(:segment)', 'Home::setLanguage/$1');
+
 // Converter routes
 $routes->get('converter', 'Converter::index');
 $routes->post('converter/translate', 'Converter::translate');

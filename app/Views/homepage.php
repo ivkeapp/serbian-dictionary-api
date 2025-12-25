@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= service('request')->getLocale() ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title) ?></title>
-    <meta name="description" content="A comprehensive CodeIgniter4 API serving Serbian words, names, and surnames with Latin/Cyrillic transliteration support.">
+    <meta name="description" content="<?= lang('App.site.description') ?>">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -366,24 +366,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#documentation">Documentation</a>
+                        <a class="nav-link" href="#documentation"><?= lang('App.nav.api_docs') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#use-cases">Use Cases</a>
+                        <a class="nav-link" href="#use-cases"><?= lang('App.nav.use_cases') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#examples">Examples</a>
+                        <a class="nav-link" href="#examples"><?= lang('App.nav.examples') ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('converter') ?>">
-                            <i class="fas fa-exchange-alt me-1"></i>Text Converter
+                            <i class="fas fa-exchange-alt me-1"></i><?= lang('App.nav.converter') ?>
                         </a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <?= view('components/language_switcher') ?>
                     <a href="<?= esc($github_url) ?>" target="_blank" class="github-link">
                         <i class="fab fa-github"></i>
-                        <span class="d-none d-lg-inline">GitHub</span>
+                        <span class="d-none d-lg-inline"><?= lang('App.nav.github') ?></span>
                     </a>
                 </div>
             </div>
@@ -398,20 +399,20 @@
                     <img src="serbian_flag.jpg" alt="Serbian flag" width="120" class="mb-3">
                     <h1 class="hero-title"><?= esc($title) ?></h1>
                     <p class="hero-subtitle">
-                        A comprehensive CodeIgniter4 API serving Serbian words, names, and surnames with Latin/Cyrillic transliteration support
+                        <?= lang('App.hero.subtitle') ?>
                     </p>
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
                         <a href="#documentation" class="btn btn-primary-custom">
                             <i class="fas fa-book"></i>
-                            <span>View Documentation</span>
+                            <span><?= lang('App.hero.viewDocs') ?></span>
                         </a>
                         <a href="<?= base_url('converter') ?>" class="btn btn-outline-custom">
                             <i class="fas fa-exchange-alt"></i>
-                            <span>Text Converter</span>
+                            <span><?= lang('App.nav.converter') ?></span>
                         </a>
                         <a href="<?= esc($github_url) ?>" target="_blank" class="btn btn-outline-custom">
                             <i class="fab fa-github"></i>
-                            <span>View on GitHub</span>
+                            <span><?= lang('App.footer.viewOnGithub') ?></span>
                         </a>
                     </div>
                 </div>
@@ -426,25 +427,25 @@
                 <div class="col-md-3 col-6 mb-4">
                     <div class="stat-item">
                         <div class="stat-number">2.8M+</div>
-                        <div class="stat-label">Words</div>
+                        <div class="stat-label"><?= lang('App.stats.words') ?></div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="stat-item">
                         <div class="stat-number">1.8K+</div>
-                        <div class="stat-label">Names</div>
+                        <div class="stat-label"><?= lang('App.stats.names') ?></div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="stat-item">
                         <div class="stat-number">8K+</div>
-                        <div class="stat-label">Surnames</div>
+                        <div class="stat-label"><?= lang('App.stats.surnames') ?></div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="stat-item">
                         <div class="stat-number">2</div>
-                        <div class="stat-label">Scripts</div>
+                        <div class="stat-label"><?= lang('App.stats.scripts') ?></div>
                     </div>
                 </div>
             </div>
@@ -454,7 +455,7 @@
     <!-- Documentation Section -->
     <section id="documentation" class="py-5">
         <div class="container">
-            <h2 class="section-title">API Documentation</h2>
+            <h2 class="section-title"><?= lang('App.apiDocs.title') ?></h2>
             <div class="row">
                 <?php foreach ($api_endpoints as $endpoint): ?>
                 <div class="col-12 mb-5">
@@ -466,7 +467,7 @@
                             </div>
                             <p class="card-text mb-4"><?= esc($endpoint['description']) ?></p>
                             
-                            <h6 class="mb-3"><i class="fas fa-cogs me-2"></i>Parameters:</h6>
+                            <h6 class="mb-3"><i class="fas fa-cogs me-2"></i><?= lang('App.apiDocs.params') ?>:</h6>
                             <div class="row mb-4">
                                 <?php foreach ($endpoint['params'] as $param => $description): ?>
                                 <div class="col-md-6 mb-2">
@@ -478,7 +479,7 @@
 
                             <?php if (isset($endpoint['examples'])): ?>
                             <div class="api-examples">
-                                <h6 class="mb-3"><i class="fas fa-code me-2"></i>Live Examples:</h6>
+                                <h6 class="mb-3"><i class="fas fa-code me-2"></i><?= lang('App.apiDocs.examples') ?>:</h6>
                                 <?php foreach ($endpoint['examples'] as $example => $desc): ?>
                                 <div class="example-description"><?= esc($desc) ?></div>
                                 <a href="<?= esc($base_url . ltrim($example, '/')) ?>" target="_blank" class="example-link">
@@ -498,7 +499,7 @@
     <!-- Use Cases Section -->
     <section id="use-cases" class="py-5 bg-light">
         <div class="container">
-            <h2 class="section-title">Use Cases</h2>
+            <h2 class="section-title"><?= lang('App.useCases.title') ?></h2>
             <div class="row">
                 <?php foreach ($use_cases as $index => $case): ?>
                 <div class="col-lg-6 mb-4">
@@ -522,7 +523,7 @@
     <!-- Code Examples Section -->
     <section id="examples" class="py-5">
         <div class="container">
-            <h2 class="section-title">Code Examples</h2>
+            <h2 class="section-title"><?= lang('App.codeExamples.title') ?></h2>
             
             <!-- JavaScript Example -->
             <div class="code-container">
@@ -991,16 +992,16 @@ curl "<?= esc($base_url) ?>api/stats"</code></pre>
             <div class="row">
                 <div class="col-md-6">
                     <h5><?= esc($title) ?></h5>
-                    <p class="mb-0">A comprehensive Serbian language API with transliteration support.</p>
+                    <p class="mb-0"><?= lang('App.site.description') ?></p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="mb-2">
                         <a href="<?= esc($github_url) ?>" target="_blank" class="text-light text-decoration-none">
-                            <i class="fab fa-github me-2"></i>View on GitHub
+                            <i class="fab fa-github me-2"></i><?= lang('App.footer.viewOnGithub') ?>
                         </a>
                     </div>
                     <div>
-                        <small>Version <?= esc($version) ?> &copy; <?= date('Y') ?></small>
+                        <small><?= lang('App.site.version') ?> <?= esc($version) ?> &copy; <?= date('Y') ?></small>
                     </div>
                 </div>
             </div>
