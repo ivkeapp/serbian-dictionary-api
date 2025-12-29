@@ -48,12 +48,14 @@ class SerbianDataService
             $model = new \App\Models\WordSmallModel();
         }
         
+        $db = \Config\Database::connect();
         $builder = $model->builder();
         
         // Apply filters
         if (!empty($filters['starts_with'])) {
             $startsWith = $filters['starts_with'];
-            $builder->like('word', $startsWith, 'after');
+            // Use BINARY comparison to distinguish between 'ž' and 'z', 'č' and 'c', etc.
+            $builder->where("BINARY word LIKE BINARY " . $db->escape($startsWith . '%'), null, false);
         }
         
         if (!empty($filters['contains'])) {
@@ -125,12 +127,15 @@ class SerbianDataService
     public static function getNames(array $filters = []): array
     {
         $model = new \App\Models\NameModel();
+        $db = \Config\Database::connect();
         $builder = $model->builder();
 
         // Apply filters
         if (!empty($filters['starts_with'])) {
             // log_message('debug', 'starts_with: ' . $filters['starts_with']);
-            $builder->like('name', $filters['starts_with'], 'after');
+            $startsWith = $filters['starts_with'];
+            // Use BINARY comparison to distinguish between 'ž' and 'z', 'č' and 'c', etc.
+            $builder->where("BINARY name LIKE BINARY " . $db->escape($startsWith . '%'), null, false);
         }
 
         if (!empty($filters['gender']) && $filters['gender'] !== 'all') {
@@ -285,20 +290,21 @@ class SerbianDataService
     public static function getSurnames(array $filters = []): array
     {
         $model = new \App\Models\SurnameModel();
+        $db = \Config\Database::connect();
 
         // Base query
         $builder = $model->builder();
 
-        // Apply "starts_with" filter (case-insensitive, Latin/Cyrillic normalization)
+        // Apply "starts_with" filter (case-sensitive to respect diacritics like Ž vs Z)
         if (!empty($filters['starts_with'])) {
             $startsWith = $filters['starts_with'];
 
             // Normalize Cyrillic to Latin for comparison consistency
             $startsWith = self::normalizeToLatin($startsWith);
 
-            // We'll search by normalized Latin version in 'surname' column
-            // (Assumes surnames are stored in Latin)
-            $builder->like('surname', $startsWith, 'after');
+            // Use BINARY comparison to distinguish between 'ž' and 'z', 'č' and 'c', etc.
+            // This ensures diacritics are respected in the search
+            $builder->where("BINARY surname LIKE BINARY " . $db->escape($startsWith . '%'), null, false);
         }
 
         // Randomize results if requested
