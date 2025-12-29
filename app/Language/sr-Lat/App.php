@@ -4,7 +4,7 @@ return [
     // Site metadata
     'site.title' => 'Srpski Rečnik API',
     'site.version' => 'Verzija',
-    'site.description' => 'Sveobuhvatni CodeIgniter4 API koji služi srpske reči, imena i prezimena sa podrškom za latinicu i ćirilicu.',
+    'site.description' => 'Sveobuhvatni REST API koji obuhvata srpske reči, imena i prezimena, uz podršku za latinicu i ćirilicu.',
     
     // Navigation
     'nav.home' => 'Početna',
@@ -16,7 +16,7 @@ return [
     
     // Hero section
     'hero.title' => 'Srpski Rečnik API',
-    'hero.subtitle' => 'Sveobuhvatni CodeIgniter4 API koji služi srpske reči, imena i prezimena sa podrškom za latinicu i ćirilicu.',
+    'hero.subtitle' => 'Sveobuhvatni REST API koji obuhvata srpske reči, imena i prezimena, uz podršku za latinicu i ćirilicu.',
     'hero.getStarted' => 'Počnite',
     'hero.viewDocs' => 'Pogledajte dokumentaciju',
     
@@ -32,38 +32,38 @@ return [
     'apiDocs.examples' => 'Primeri',
     
     // API Endpoints
-    'api.words.description' => 'Dobijte paginiranu listu srpskih reči sa opcijama za filtriranje',
+    'api.words.description' => 'Preuzmite listu srpskih reči podeljenu na stranice, sa opcijama filtriranja',
     'api.words.param.dataset' => 'Izaberite između malog (41K reči) ili velikog (2.8M reči) skupa podataka',
-    'api.words.param.script' => 'Vraćajte reči latinicom ili ćirilicom',
+    'api.words.param.script' => 'Preuzmite reči latinicom ili ćirilicom',
     'api.words.param.starts_with' => 'Filtrirajte reči koje počinju određenim slovima',
     'api.words.param.contains' => 'Filtrirajte reči koje sadrže određeni tekst',
     'api.words.param.length' => 'Filtrirajte reči po tačnoj dužini',
     'api.words.param.min_length' => 'Filtrirajte reči sa minimalnom dužinom',
     'api.words.param.max_length' => 'Filtrirajte reči sa maksimalnom dužinom',
-    'api.words.param.random' => 'Randomizujte redosled rezultata',
+    'api.words.param.random' => 'Primenite nasumični redosled rezultata',
     'api.words.param.page' => 'Broj stranice za paginaciju (podrazumevano: 1)',
     'api.words.param.limit' => 'Broj rezultata po stranici (podrazumevano: 50, max: 100)',
-    'api.words.example.1' => 'Dobijte prvih 10 reči iz malog skupa podataka',
+    'api.words.example.1' => 'Preuzmite prvih 10 reči iz malog skupa podataka',
     'api.words.example.2' => 'Reči koje počinju sa "pre" u ćirilici',
     'api.words.example.3' => '20 nasumičnih reči sa 5 slova',
     'api.words.example.4' => 'Reči koje sadrže "ov" sa 6+ karaktera',
     'api.words.example.5' => 'Kratke reči (≤4 znaka) iz velikog skupa podataka',
     
-    'api.names.description' => 'Dobijte srpska imena sa informacijama o rodu i vokativnim oblicima',
+    'api.names.description' => 'Preuzmite srpska imena sa informacijama o rodu i vokativnim oblicima',
     'api.names.param.gender' => 'Filtrirajte po muškom, ženskom ili svim rodovima',
     'api.names.param.starts_with' => 'Filtrirajte imena koja počinju određenim slovima',
     'api.names.param.with_vocative' => 'Uključite vokativne oblike u odgovor',
-    'api.names.param.random' => 'Randomizujte redosled rezultata',
+    'api.names.param.random' => 'Primenite nasumični redosled rezultata',
     'api.names.param.page' => 'Broj stranice za paginaciju',
     'api.names.param.limit' => 'Broj rezultata po stranici',
-    'api.names.example.1' => 'Dobijte 15 muških imena',
+    'api.names.example.1' => 'Preuzmite 15 muških imena',
     'api.names.example.2' => 'Imena koja počinju sa "M" sa vokativnim oblicima',
     'api.names.example.3' => '5 nasumičnih ženskih imena',
     'api.names.example.4' => 'Druga stranica imena sa vokativima',
     
-    'api.surnames.description' => 'Dobijte srpska prezimena sa varijantama na latinici i ćirilici',
+    'api.surnames.description' => 'Preuzmite srpska prezimena sa varijantama na latinici i ćirilici',
     'api.surnames.param.starts_with' => 'Filtrirajte prezimena koja počinju određenim slovima',
-    'api.surnames.param.random' => 'Randomizujte redosled rezultata',
+    'api.surnames.param.random' => 'Primenite nasumični redosled rezultata',
     'api.surnames.param.page' => 'Broj stranice za paginaciju',
     'api.surnames.param.limit' => 'Broj rezultata po stranici',
     'api.surnames.example.1' => 'Prezimena koja počinju sa "Pet"',
@@ -77,11 +77,11 @@ return [
     'api.transliterate.example.2' => 'Konvertuj mešoviti tekst u latinicu',
     'api.transliterate.example.3' => 'Konvertuj ime u ćirilicu',
     
-    'api.random.description' => 'Dobijte nasumičan unos iz bilo kog tipa skupa podataka',
+    'api.random.description' => 'Preuzmite nasumičan unos iz bilo kog tipa skupa podataka',
     'api.random.param.type' => 'Tip unosa: word, name ili surname (obavezno)',
-    'api.random.example.1' => 'Dobijte nasumičnu srpsku reč',
-    'api.random.example.2' => 'Dobijte nasumično srpsko ime sa vokativom',
-    'api.random.example.3' => 'Dobijte nasumično srpsko prezime',
+    'api.random.example.1' => 'Preuzmite nasumičnu srpsku reč',
+    'api.random.example.2' => 'Preuzmite nasumično srpsko ime sa vokativom',
+    'api.random.example.3' => 'Preuzmite nasumično srpsko prezime',
     
     // Use Cases section
     'useCases.title' => 'Primene',
