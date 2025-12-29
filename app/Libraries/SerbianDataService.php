@@ -54,6 +54,10 @@ class SerbianDataService
         // Apply filters
         if (!empty($filters['starts_with'])) {
             $startsWith = $filters['starts_with'];
+            
+            // Convert Cyrillic to Latin for comparison consistency
+            $startsWith = Transliteration::toLatin($startsWith);
+            
             // Use BINARY comparison to distinguish between 'ž' and 'z', 'č' and 'c', etc.
             $builder->where("BINARY word LIKE BINARY " . $db->escape($startsWith . '%'), null, false);
         }
@@ -134,6 +138,13 @@ class SerbianDataService
         if (!empty($filters['starts_with'])) {
             // log_message('debug', 'starts_with: ' . $filters['starts_with']);
             $startsWith = $filters['starts_with'];
+            
+            // Convert Cyrillic to Latin for comparison consistency
+            $startsWith = Transliteration::toLatin($startsWith);
+            
+            // Capitalize first letter to match database naming convention
+            $startsWith = mb_strtoupper(mb_substr($startsWith, 0, 1)) . mb_substr($startsWith, 1);
+            
             // Use BINARY comparison to distinguish between 'ž' and 'z', 'č' and 'c', etc.
             $builder->where("BINARY name LIKE BINARY " . $db->escape($startsWith . '%'), null, false);
         }
@@ -299,8 +310,11 @@ class SerbianDataService
         if (!empty($filters['starts_with'])) {
             $startsWith = $filters['starts_with'];
 
-            // Normalize Cyrillic to Latin for comparison consistency
-            $startsWith = self::normalizeToLatin($startsWith);
+            // Convert Cyrillic to Latin for comparison consistency (e.g., "ха" → "ha")
+            $startsWith = Transliteration::toLatin($startsWith);
+            
+            // Capitalize first letter to match database naming convention (surnames start with uppercase)
+            $startsWith = mb_strtoupper(mb_substr($startsWith, 0, 1)) . mb_substr($startsWith, 1);
 
             // Use BINARY comparison to distinguish between 'ž' and 'z', 'č' and 'c', etc.
             // This ensures diacritics are respected in the search
@@ -562,21 +576,6 @@ class SerbianDataService
     }
 
 
-    /**
-     * Normalize Cyrillic lookalike letters to Latin
-     */
-    private static function normalizeToLatin(string $str): string
-    {
-        $map = [
-            // Uppercase
-            'А' => 'A', 'В' => 'B', 'Е' => 'E', 'К' => 'K', 'М' => 'M',
-            'Н' => 'H', 'О' => 'O', 'Р' => 'P', 'С' => 'C', 'Т' => 'T', 'Х' => 'X',
-            // Lowercase
-            'а' => 'a', 'в' => 'b', 'е' => 'e', 'к' => 'k', 'м' => 'm',
-            'н' => 'h', 'о' => 'o', 'р' => 'p', 'с' => 'c', 'т' => 't', 'х' => 'x'
-        ];
 
-        return strtr($str, $map);
-    }
 
 }
