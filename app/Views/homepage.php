@@ -356,9 +356,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#home">
+            <a class="navbar-brand" href="<?= base_url() ?>">
                 <i class="fas fa-book-open me-2"></i>
-                <?= esc($title) ?>
+                <?= lang('App.site.title') ?>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -366,7 +366,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#documentation"><?= lang('App.nav.api_docs') ?></a>
+                        <a class="nav-link" href="<?= base_url() ?>">
+                            <i class="fas fa-search me-1"></i><?= lang('App.nav.home') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="<?= base_url('docs') ?>"><?= lang('App.nav.api_docs') ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#use-cases"><?= lang('App.nav.use_cases') ?></a>

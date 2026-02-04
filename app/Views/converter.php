@@ -394,7 +394,12 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url() ?>">
-                            <i class="fas fa-home me-1"></i><?= lang('App.nav.home') ?>
+                            <i class="fas fa-search me-1"></i><?= lang('App.nav.home') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('docs') ?>">
+                            <i class="fas fa-book me-1"></i><?= lang('App.nav.api_docs') ?>
                         </a>
                     </li>
                     <li class="nav-item">
