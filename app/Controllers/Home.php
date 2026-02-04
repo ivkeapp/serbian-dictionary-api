@@ -4,6 +4,23 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+    /**
+     * New search-focused homepage
+     */
+    public function search(): string
+    {
+        $data = [
+            'title' => lang('App.search.title'),
+            'github_url' => 'https://github.com/ivkeapp/serbian-dictionary-api',
+            'base_url' => base_url(),
+        ];
+
+        return view('search', $data);
+    }
+
+    /**
+     * API Documentation page (former homepage)
+     */
     public function index(): string
     {
         $data = [

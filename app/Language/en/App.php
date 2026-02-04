@@ -142,4 +142,17 @@ return [
     'lang.english' => 'English',
     'lang.serbian_latin' => 'Srpski (latinica)',
     'lang.serbian_cyrillic' => 'Српски (ćirilica)',
+    
+    // Search page
+    'search.title' => 'Serbian Dictionary Search',
+    'search.tagline' => 'Search and explore Serbian words easily.',
+    'search.placeholder' => 'Type a word to search...',
+    'search.no_results' => 'No results found',
+    'search.min_chars' => 'Type at least 2 characters',
+    'search.loading' => 'Searching...',
+    'search.result_title' => 'Search Result',
+    'search.similar_words' => 'Similar Words',
+    'search.latin' => 'Latin',
+    'search.cyrillic' => 'Cyrillic',
+    'search.try_examples' => 'Try searching for:',
 ];

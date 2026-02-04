@@ -142,4 +142,17 @@ return [
     'lang.english' => 'English',
     'lang.serbian_latin' => 'Srpski (latinica)',
     'lang.serbian_cyrillic' => 'Српски (ćirilica)',
+    
+    // Search page
+    'search.title' => 'Pretraga srpskog rečnika',
+    'search.tagline' => 'Pretražujte i istražujte srpske reči lako.',
+    'search.placeholder' => 'Ukucajte reč za pretragu...',
+    'search.no_results' => 'Nema rezultata',
+    'search.min_chars' => 'Ukucajte bar 2 karaktera',
+    'search.loading' => 'Pretraživanje...',
+    'search.result_title' => 'Rezultat pretrage',
+    'search.similar_words' => 'Slične reči',
+    'search.latin' => 'Latinica',
+    'search.cyrillic' => 'Ćirilica',
+    'search.try_examples' => 'Probajte da pretražite:',
 ];

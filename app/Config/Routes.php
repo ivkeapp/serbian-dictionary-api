@@ -6,7 +6,10 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->setTranslateURIDashes(false);
-$routes->get('/', 'Home::index');
+
+// Main routes
+$routes->get('/', 'Home::search');           // New search-focused homepage
+$routes->get('docs', 'Home::index');          // API documentation (former homepage)
 
 // Language routes
 $routes->get('set-language/(:segment)', 'Home::setLanguage/$1');
