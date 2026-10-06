@@ -10,9 +10,9 @@ class Home extends BaseController
     public function search(): string
     {
         $data = [
-            'title' => lang('App.search.title'),
-            'github_url' => 'https://github.com/ivkeapp/serbian-dictionary-api',
-            'base_url' => base_url(),
+            'title' => lang('App.site.brand'),
+            'page' => 'recnik',
+            'description' => lang('App.search.tagline'),
         ];
 
         return view('search', $data);
@@ -24,15 +24,15 @@ class Home extends BaseController
     public function index(): string
     {
         $data = [
-            'title' => lang('App.site.title'),
+            'title' => lang('App.nav.api_docs') . ' · ' . lang('App.site.brand'),
+            'page' => 'api',
             'version' => '1.0.0',
-            'github_url' => 'https://github.com/ivkeapp/serbian-dictionary-api',
-            'base_url' => base_url(),
             'api_endpoints' => [
                 [
                     'method' => 'GET',
                     'endpoint' => '/api/words',
                     'description' => lang('App.api.words.description'),
+                    'note' => lang('App.apiDocs.note.words'),
                     'params' => [
                         'dataset' => lang('App.api.words.param.dataset'),
                         'script' => lang('App.api.words.param.script'),
@@ -57,6 +57,7 @@ class Home extends BaseController
                     'method' => 'GET',
                     'endpoint' => '/api/names',
                     'description' => lang('App.api.names.description'),
+                    'note' => lang('App.apiDocs.note.names'),
                     'params' => [
                         'gender' => lang('App.api.names.param.gender'),
                         'starts_with' => lang('App.api.names.param.starts_with'),
@@ -76,6 +77,7 @@ class Home extends BaseController
                     'method' => 'GET',
                     'endpoint' => '/api/surnames',
                     'description' => lang('App.api.surnames.description'),
+                    'note' => lang('App.apiDocs.note.surnames'),
                     'params' => [
                         'starts_with' => lang('App.api.surnames.param.starts_with'),
                         'random' => lang('App.api.surnames.param.random'),
@@ -92,6 +94,7 @@ class Home extends BaseController
                     'method' => 'GET',
                     'endpoint' => '/api/transliterate',
                     'description' => lang('App.api.transliterate.description'),
+                    'note' => lang('App.apiDocs.note.transliterate'),
                     'params' => [
                         'text' => lang('App.api.transliterate.param.text'),
                         'to' => lang('App.api.transliterate.param.to')
@@ -106,6 +109,7 @@ class Home extends BaseController
                     'method' => 'GET',
                     'endpoint' => '/api/random',
                     'description' => lang('App.api.random.description'),
+                    'note' => lang('App.apiDocs.note.random'),
                     'params' => [
                         'type' => lang('App.api.random.param.type')
                     ],
