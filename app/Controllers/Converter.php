@@ -17,8 +17,9 @@ class Converter extends BaseController
     public function index(): string
     {
         $data = [
-            'title' => lang('App.converter.title'),
-            'description' => lang('App.converter.description')
+            'title' => lang('App.nav.converter') . ' · ' . lang('App.site.brand'),
+            'page' => 'konvertor',
+            'description' => lang('App.converter.description'),
         ];
 
         return view('converter', $data);
